@@ -5,12 +5,14 @@ import {
   Text,
   TextInput,
   DatePickerIOS,
+  DatePickerAndroid,
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Alert
+  Alert,
+  Platform
 } from 'react-native'
-// import moment from 'moment'
+import moment from 'moment'
 import commonStyles from '../commonStyles'
 
 const initialState = {
@@ -31,7 +33,40 @@ export default class AddTask extends Component {
     this.setState({ ...initialState })
   }
 
+  handleDateAndroidChanged = () => {
+    DatePickerAndroid.open({
+      date: this.state.date
+    }).then(e => {
+      if (e.action !== DatePickerAndroid.dismissedAction) {
+        const momentDate = moment(this.state.date)
+        momentDate.date(e.day)
+        momentDate.month(e.month)
+        momentDate.year(e.year)
+        this.setState({ date: momentDate.toDate() })
+      }
+    })
+  }
+
   render () {
+    let datePicker = null
+    if (Platform.OS === 'ios') {
+      datePicker = (
+        <DatePickerIOS
+          mode='date'
+          date={this.state.date}
+          onDateChange={date => this.setState({ date })}
+        />
+      )
+    } else {
+      datePicker = (
+        <TouchableOpacity onPress={this.handleDateAndroidChanged}>
+          <Text style={styles.date}>
+            {moment(this.state.date).format('ddd, D [de] MMMM [de] YYYY')}
+          </Text>
+        </TouchableOpacity>
+      )
+    }
+
     return (
       <Modal
         onRequestClose={this.props.onCancel}
@@ -51,11 +86,7 @@ export default class AddTask extends Component {
             onChangeText={desc => this.setState({ desc })}
             value={this.state.desc}
           />
-          <DatePickerIOS
-            mode='date'
-            date={this.state.date}
-            onDateChange={date => this.setState({ date })}
-          />
+          {datePicker}
 
           <View
             style={{
@@ -112,5 +143,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e3e3e3',
     borderRadius: 6
+  },
+  date: {
+    fontFamily: commonStyles.fontFamily,
+    fontSize: 20,
+    marginLeft: 10,
+    marginTop: 10,
+    textAlign: 'center'
   }
 })
