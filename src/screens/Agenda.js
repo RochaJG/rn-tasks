@@ -6,8 +6,7 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
-  Platform,
-  AsyncStorage
+  Platform
 } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -15,6 +14,7 @@ import todayImage from '../../assets/imgs/today.jpg'
 import commonStyles from '../commonStyles'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ActionButton from 'react-native-action-button'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import Task from '../components/Task'
 import AddTask from './AddTask'
