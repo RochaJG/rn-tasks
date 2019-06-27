@@ -3,7 +3,7 @@ import { createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import Agenda from './screens/Agenda'
 import Auth from './screens/Auth'
 
-import commonStyles from './common'
+import commonStyles from './commonStyles'
 
 const MenuRoutes = {
   Today: {
