@@ -77,7 +77,7 @@ export default class Auth extends Component {
       validations.push(this.state.password === this.state.confirmPassword)
     }
 
-    const validForm = validations.reduce((all, v) => all & v)
+    const validForm = validations.reduce((all, v) => all && v)
 
     return (
       <ImageBackground source={backgroundImage} style={styles.background}>
@@ -116,10 +116,10 @@ export default class Auth extends Component {
               placeholder='Confirmação'
               style={styles.input}
               value={this.state.confirmPassword}
-              secureTextEntry
               onChangeText={confirmPassword =>
                 this.setState({ confirmPassword })
               }
+              secureTextEntry
             />
           )}
 
