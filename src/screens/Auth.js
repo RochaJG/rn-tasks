@@ -10,6 +10,7 @@ import {
 import axios from 'axios'
 import { server, showError } from '../common'
 import AuthInput from '../components/AuthInput'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import commonStyles from '../commonStyles'
 import backgroundImage from '../../assets/imgs/login.jpg'
@@ -34,6 +35,7 @@ export default class Auth extends Component {
         res.data.token
       }`
 
+      AsyncStorage.setItem('userData', JSON.stringify(res.data))
       this.props.navigation.navigate('Home', res.data)
     } catch (err) {
       Alert.alert('Erro!', 'Falha no Login!')

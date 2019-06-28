@@ -3,6 +3,7 @@ import { createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import Agenda from './screens/Agenda'
 import Auth from './screens/Auth'
 import Menu from './screens/Menu'
+import AuthOrApp from './screens/AuthOrApp'
 
 import commonStyles from './commonStyles'
 
@@ -55,6 +56,10 @@ const MenuConfig = {
 const MenuNavigator = createDrawerNavigator(MenuRoutes, MenuConfig)
 
 const MainRoutes = {
+  Loading: {
+    name: 'Loading',
+    screen: AuthOrApp
+  },
   Auth: {
     name: 'Auth',
     screen: Auth
@@ -66,7 +71,7 @@ const MainRoutes = {
 }
 
 const MainNavigator = createSwitchNavigator(MainRoutes, {
-  initialRouteName: 'Auth'
+  initialRouteName: 'Loading'
 })
 
 export default MainNavigator
